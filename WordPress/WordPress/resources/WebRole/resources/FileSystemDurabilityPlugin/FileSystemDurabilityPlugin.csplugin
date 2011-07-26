@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" ?>
+<RoleModule
+  xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition"
+  namespace="FileSystemDurabilityPlugin">
+  <Startup priority="-1">
+    <Task commandLine="InstallSyncFx.cmd > InstallSyncFxlog.txt" taskType="simple" executionContext="elevated"/>
+    <Task commandLine="FileSystemDurabilityPlugin.exe > FileSystemDurabilityPluginLog.txt" taskType="background" executionContext="elevated"/>
+  </Startup>
+  <ConfigurationSettings>
+    <Setting name="StorageAccountName"/>
+    <Setting name="StorageAccountPrimaryKey"/>
+    <Setting name="SyncContainerName"/>
+    <Setting name="LocalFolderToSync"/>
+    <Setting name="ExcludePathsFromSync"/>
+    <Setting name="SyncFrequencyInSeconds"/>
+  </ConfigurationSettings>
+</RoleModule>

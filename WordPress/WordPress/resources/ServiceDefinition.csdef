@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="PhpOnAzure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <WebRole name="WebRole" enableNativeCodeExecution="true" vmsize="Small">
+    <Sites>
+      <Site name="WebRole" physicalDirectory="./WebRole">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="HttpEndpoint" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <Startup>
+      <Task commandLine="install-php.cmd >> .\startup-tasks-log.txt 2>>.\startup-tasks-error-log.txt" executionContext="elevated" taskType="simple" /> 
+    </Startup>
+    <Endpoints>
+      <InputEndpoint name="HttpEndpoint" protocol="http" port="80" />
+    </Endpoints>
+    <Imports>
+      <Import moduleName="Diagnostics"/>
+      <Import moduleName="FileSystemDurabilityPlugin" />
+      <Import moduleName="RemoteAccess"/>
+      <Import moduleName="RemoteForwarder"/>
+    </Imports>
+    <ConfigurationSettings>
+      <Setting name="DB_NAME"/>
+      <Setting name="DB_USER" />
+      <Setting name="DB_PASSWORD" />
+      <Setting name="DB_HOST" />
+      <Setting name="DB_TYPE" />
+      <Setting name="DB_CHARSET" />
+      <Setting name="DB_COLLATE" />
+      <Setting name="AUTH_KEY" />
+      <Setting name="SECURE_AUTH_KEY"/>
+      <Setting name="LOGGED_IN_KEY" />
+      <Setting name="NONCE_KEY" />
+      <Setting name="AUTH_SALT" />
+      <Setting name="SECURE_AUTH_SALT"/>
+      <Setting name="LOGGED_IN_SALT" />
+      <Setting name="NONCE_SALT"  />
+      <Setting name="DB_TABLE_PREFIX"  />
+      <Setting name="WPLANG" />
+      <Setting name="WP_DEBUG" />
+      <Setting name="SAVEQUERIES"  />
+      <Setting name="RELOCATE"  />
+      <Setting name="WP_ALLOW_MULTISITE" /> 
+      <Setting name="MULTISITE" /> 
+      <Setting name="SUBDOMAIN_INSTALL" /> 
+      <Setting name="base" /> 
+      <Setting name="DOMAIN_CURRENT_SITE"/> 
+      <Setting name="PATH_CURRENT_SITE" /> 
+      <Setting name="SITE_ID_CURRENT_SITE" /> 
+      <Setting name="BLOG_ID_CURRENT_SITE"  /> 
+
+
+
+    </ConfigurationSettings>
+  </WebRole>
+</ServiceDefinition>
