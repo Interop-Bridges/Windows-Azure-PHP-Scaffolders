@@ -1,4 +1,5 @@
 <?php
+set_time_limit(600);
 /**
  * Copyright (c) 2009 - 2011, RealDolmen
  * All rights reserved.
