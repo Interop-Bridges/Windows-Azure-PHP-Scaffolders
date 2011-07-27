@@ -17,8 +17,6 @@
     <Imports>
       <Import moduleName="Diagnostics"/>
       <Import moduleName="FileSystemDurabilityPlugin" />
-      <Import moduleName="RemoteAccess"/>
-      <Import moduleName="RemoteForwarder"/>
     </Imports>
     <ConfigurationSettings>
       <Setting name="DB_NAME"/>
