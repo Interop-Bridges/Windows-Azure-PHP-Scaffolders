@@ -123,10 +123,10 @@ class WordPress
 	 * @command-parameter-for $DB_TYPE Argv|ConfigFile|Env --DB_TYPE|-DB_TYPE Optional. Database type. 'sqlsrv' for SQL Azure
 	 * @command-parameter-for $DB_CHARSET Argv|ConfigFile|Env --DB_CHARSET|-DB_CHARSET Optional. Database character set
 	 * @command-parameter-for $DB_COLLATE Argv|ConfigFile|Env --DB_COLLATE|-DB_COLLATE Optional. Database collation
-	 * @command-parameter-for $AUTH_KEY Argv|ConfigFile|Env --AUTH_KEY|-AUTH_KEY Required. Auth key
-	 * @command-parameter-for $SECURE_AUTH_KEY Argv|ConfigFile|Env --SECURE_AUTH_KEY|-SECURE_AUTH_KEY Required. Secure auth key
-	 * @command-parameter-for $LOGGED_IN_SALT Argv|ConfigFile|Env --LOGGED_IN_SALT|-LOGGED_IN_SALT Required. Logged in salt
-	 * @command-parameter-for $NONCE_SALT Argv|ConfigFile|Env --NONCE_SALT|-NONCE_SALT Required. Nonce salt
+	 * @command-parameter-for $AUTH_KEY Argv|ConfigFile|Env --AUTH_KEY|-AUTH_KEY Optional. Auth key
+	 * @command-parameter-for $SECURE_AUTH_KEY Argv|ConfigFile|Env --SECURE_AUTH_KEY|-SECURE_AUTH_KEY Optional. Secure auth key
+	 * @command-parameter-for $LOGGED_IN_SALT Argv|ConfigFile|Env --LOGGED_IN_SALT|-LOGGED_IN_SALT Optional. Logged in salt
+	 * @command-parameter-for $NONCE_SALT Argv|ConfigFile|Env --NONCE_SALT|-NONCE_SALT Optional. Nonce salt
 	 * @command-parameter-for $DB_TABLE_PREFIX Argv|ConfigFile|Env --DB_TABLE_PREFIX|-DB_TABLE_PREFIX Optional. Database table prefix
 	 * @command-parameter-for $WPLANG Argv|ConfigFile|Env --WPLANG|-WPLANG Optional. International language
 	 * @command-parameter-for $WP_DEBUG Argv|ConfigFile|Env --WP_DEBUG|-WP_DEBUG Optional. WordPress debugging
@@ -222,7 +222,7 @@ class WordPress
                 
                 // Download and unpack DB abstraction layer
                 $this->log('Downloading Database Abstraction Layer');
-                $file = $this->curlFile("http://downloads.wordpress.org/plugin/wordpress-database-abstraction.1.0.1.zip", $tmp);
+                $file = $this->curlFile("http://downloads.wordpress.org/plugin/wordpress-database-abstraction.1.1.0.zip", $tmp);
                 $this->log('Extracting Database Abstraction Layer');
                 $this->unzip($file, $tmp);
                 $this->log('Moving Database Abstraction Layer files to ' . $approot . "\wp-content\mu-plugins");
