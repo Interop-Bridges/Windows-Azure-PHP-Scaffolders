@@ -92,7 +92,7 @@ class WordPress
                  $this->p->add('sync_container', false, 'wpsync', 'Windows Azure Storage container to sync files to');
                  $this->p->add('sync_folder', false, 'wp-content', 'WordPress folder to watch for changes');
                  $this->p->add('sync_exclude_paths', false, '', 'Path to not sync');
-                 $this->p->add('sync_mode', false, '60', 'Sync time interval in seconds');
+                 $this->p->add('sync_mode', false, '7200', 'Sync time interval in seconds');
                  $this->p->add('sync_queue', false, '', 'queue');
                  
                  $this->p->verify($options); // this should be in the parent
