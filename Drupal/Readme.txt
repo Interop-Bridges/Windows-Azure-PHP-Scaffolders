@@ -1,6 +1,7 @@
-1) Update PATH environment variable to include PHP runtime and trunk\bin folder of Windows Azure SDK for PHP. 
-   You can either modify system environemnt variable or set it for a specific command windows session using 
-   following command.
+1) Install Windows Azure SDK for PHP. Update PATH environment variable to include PHP runtime and bin folder of 
+   the Windows Azure SDK for PHP. You can either modify system environemnt variable or set it for a specific 
+   command windows session using following command. Make sure to replace correct path for PHP runtime and Windows Azure
+   SDK for PHP.
 
    SET PATH=%PATH%;C:\Program Files (x86)\PHP\v5.3\;C:\phpazure4.0.2\bin
 
@@ -8,8 +9,9 @@
    phar.readonly = Off
 
    In addition, you need to install FileSystemDurabilityPlugin.zip into Windows Azure SDK 1.4. Please extract the
-   http://satishnikam.blob.core.windows.net/sync/FileSystemDurabilityPlugin.zip file into "C:\Program Files\Windows Azure SDK\v1.4\bin\plugins" folder.
-   You may need administrative rights to this SDK folder.
+   https://github.com/downloads/Interop-Bridges/Windows-Azure-File-System-Durability-Plugin/FileSystemDurabilityPlugin.zip
+   file into "C:\Program Files\Windows Azure SDK\v1.4\bin\plugins" folder.
+   Note: You may need administrative rights to this SDK folder.
 
    Note: Please make sure to install Windows Azure SDK 1.4 Refresh that is available in Web Platform Installer. The version 
    number for this SDK is 1.4.20407.2049. This is needed for FileSystemDurabilityPlugin. You can check the version number in
