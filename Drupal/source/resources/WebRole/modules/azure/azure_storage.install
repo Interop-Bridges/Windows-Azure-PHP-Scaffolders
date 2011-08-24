@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function azure_storage_schema() {
+  $schema['azure_storage'] = array(
+    'description' => 'Contains exportable Azure Storage configurations.',
+    'export' => array(
+      'identifier' => 'azure_storage',
+      'bulk export' => TRUE,
+      'primary key' => 'id',
+      'api' => array(
+        'owner' => 'azure_storage',
+        'api' => 'default_azure_storage',
+        'minimum_version' => 1,
+        'current_version' => 1,
+      ),
+    ),
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'description' => 'A database primary key to ensure uniqueness',
+        'not null' => TRUE,
+        'no export' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'description' => 'Unique ID for this configuration. Used to identify it programmatically.',
+      ),
+      'account' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'description' => 'Name of the Azure Storage account.',
+      ),
+      'blob_url' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'description' => 'Url of the Azure Storage account.',
+      ),
+      'primary_key' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'description' => 'Primary access key of the Azure Storage account.',
+      ),
+      'blob_container' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'description' => 'Name of the container to use.',
+      ),
+      'blob_custom_url' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'description' => 'Custom URL for Azure Storage account to use.',
+      ),
+    ),
+    'primary key' => array('id'),
+    'unique keys' => array(
+      'name' => array('name'),
+    )
+  );
+
+  return $schema;
+}

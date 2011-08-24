@@ -1,0 +1,105 @@
+<?php
+
+/**
+ * Implements hook_stream_wrappers().
+ */
+function azure_storage_stream_wrappers() {
+  $wrappers = array();
+
+  ctools_include('export');
+  foreach (ctools_export_crud_load_all('azure_storage') as $name => $storage) {
+    if (!empty($storage->disabled)) {
+      continue;
+    }
+
+    $wrappers[$name] = array(
+      'name' => t('Azure storage (@key)', array('@key' => $name)),
+      'class' => 'DrupalAzureStorageStreamWrapper',
+      'description' => t('Files stored on Azure Blob Storage (@key).', array('@key' => $name)),
+      'type' => STREAM_WRAPPERS_WRITE_VISIBLE,
+    );
+  }
+
+  return $wrappers;
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function azure_storage_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools' && $plugin == 'export_ui') {
+    return 'plugins/' . $plugin;
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function azure_storage_menu() {
+  $items['azure/generate/%image_style'] = array(
+    'title' => 'Generate image style',
+    'page callback' => 'azure_storage_image_style_deliver',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function azure_storage_image_style_deliver($style, $scheme) {
+  // Check that the style is defined and the scheme is valid.
+  if (!$style || !file_stream_wrapper_valid_scheme($scheme)) {
+    return MENU_NOT_FOUND;
+  }
+
+  $args = func_get_args();
+  array_shift($args);
+  array_shift($args);
+  $target = implode('/', $args);
+
+  $image_uri = $scheme . '://' . $target;
+  $derivative_uri = image_style_path($style['name'], $image_uri);
+
+  // Don't start generating the image if the derivative already exists or if
+  // generation is in progress in another thread.
+  $lock_name = 'image_style_deliver:' . $style['name'] . ':' . drupal_hash_base64($image_uri);
+  $success = FALSE;
+  if (!file_exists($derivative_uri)) {
+    $lock_acquired = lock_acquire($lock_name);
+    if ($lock_acquired) {
+      // Copy the image locally (most of the image toolkits do not support
+      // remote files), and create the derivative.
+      $local_file = drupal_tempnam(file_directory_temp(), 'file') . '.jpg';
+      copy($image_uri, $local_file);
+      $success = image_style_create_derivative($style, $local_file, $derivative_uri);
+      lock_release($lock_name);
+    }
+    else {
+      // Sleep the client for 20s.
+      $timeout = 20;
+      $start = time();
+      do {
+        sleep(1);
+      }
+      while ((time() - $start < $timeout) && !($success = file_exists($derivative_uri)));
+    }
+  }
+  else {
+    $success = TRUE;
+  }
+
+  if ($success) {
+    // Redirect the user to the image.
+    // Add caching headers so that reverse proxies can store this page.
+    drupal_page_is_cacheable(TRUE);
+    if ($wrapper = file_stream_wrapper_get_instance_by_uri($derivative_uri)) {
+      drupal_goto($wrapper->getRealExternalUrl());
+    }
+  }
+  else {
+    watchdog('image', 'Unable to generate the derived image located at %path.', array('%path' => $derivative_uri));
+    drupal_add_http_header('Status', '500 Internal Server Error');
+    print t('Error generating image.');
+    drupal_exit();
+  }
+}

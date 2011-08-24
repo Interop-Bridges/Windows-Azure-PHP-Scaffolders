@@ -1,0 +1,1 @@
+Scaffolder.bat run --Scaffolder=drupal.phar --OutputPath=.\build\drupal --DiagnosticsConnectionString="DefaultEndpointsProtocol=https;AccountName=*****;AccountKey=*****" --sql_azure_database=***** --sql_azure_username=*****@***** --sql_azure_password=***** --sql_azure_host=*****.database.windows.net --sync_account=***** --sync_key=*****

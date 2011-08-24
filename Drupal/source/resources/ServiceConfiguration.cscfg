@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="PhpOnAzure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="2" osVersion="*">
+  <Role name="WebRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="$diagnosticsConnectionString$" />
+
+      <Setting name="sql_azure_database" value="$sql_azure_database$" />
+      <Setting name="sql_azure_username" value="$sql_azure_username$" />
+      <Setting name="sql_azure_password" value="$sql_azure_password$" />
+      <Setting name="sql_azure_host" value="$sql_azure_host$" />
+      <Setting name="db_prefix" value="$db_prefix$" />
+      <Setting name="update_free_access" value="$update_free_access$" />
+      <Setting name="drupal_hash_salt" value="$drupal_hash_salt$" />
+      <Setting name="base_url" value="$base_url$" />
+      
+      <!-- FileSystemDurabilityPlugin for synchronizing file system across instances -->
+      <Setting name="FileSystemDurabilityPlugin.StorageAccountName" value="$sync_account$" />
+      <Setting name="FileSystemDurabilityPlugin.StorageAccountPrimaryKey" value="$sync_key$" />
+      <Setting name="FileSystemDurabilityPlugin.SyncContainerName" value="$sync_container$" />
+      <Setting name="FileSystemDurabilityPlugin.LocalFolderToSync" value="$sync_folder$" />
+      <Setting name="FileSystemDurabilityPlugin.ExcludePathsFromSync" value="$sync_exclude_paths$"/>
+      <Setting name="FileSystemDurabilityPlugin.SyncFrequencyInSeconds" value="$sync_frequency_in_seconds$" />
+
+      <!-- For RDP access. Commented by default -->
+      <!--
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="****" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="****" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2039-12-31T23:59:59.0000000-08:00" />    
+      -->
+    </ConfigurationSettings>
+    <!-- Certificate for RDP access. Commented by default --> 
+    <!--
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" thumbprintAlgorithm="sha1"/>
+    </Certificates>
+    -->
+  </Role>
+</ServiceConfiguration>

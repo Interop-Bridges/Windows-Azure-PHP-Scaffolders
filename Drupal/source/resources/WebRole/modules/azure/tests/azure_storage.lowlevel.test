@@ -1,0 +1,192 @@
+<?php
+
+/**
+ * @file
+ * Low-level tests of the Drupal stream wrapper for Azure.
+ *
+ * Reuse all the *FileUnmanaged* tests from Drupal core.
+ */
+
+/**
+ * Helper class: handles initializing the test configuration and cleaning-up.
+ */
+class AzureTestHelper {
+  function __construct() {
+    // Enable our module, some tests do not enable it properly.
+    module_enable(array('ctools', 'azure_storage'));
+
+    // Create a the test configuration.
+    $this->containerName = 'test-' . strtolower(DrupalTestCase::randomName());
+    $configuration = array(
+      'name' => 'azure-test',
+      'account' => 'cgtest',
+      'blob_url' => 'blob.core.windows.net',
+      'primary_key' => '6+DkX2761Jbs6r2mjhblzluJ7iGY444fEwpKGYYRiYUrBoFvYFsTjovAsEjQoy+4mA89/qAXNSwOI2kIQ7Hk9w==',
+      'blob_container' => $this->containerName,
+    );
+    drupal_write_record('azure_storage', $configuration);
+
+    // Reload the stream wrappers.
+    drupal_static_reset('file_get_stream_wrappers');
+    ctools_export_load_object_reset('azure_storage');
+    DrupalAzureStorageStreamWrapper::$storageClients = array();
+    file_get_stream_wrappers();
+    variable_set('file_default_scheme', 'azure-test');
+
+    // Save our storage client for later.
+    $this->storageClient = DrupalAzureStorageStreamWrapper::buildStorageClient('azure-test');
+    $this->storageClient->createContainer($this->containerName);
+  }
+
+  function __destruct() {
+    try {
+      // Destroy the container.
+      $this->storageClient->deleteContainer($this->containerName);
+    }
+    catch (Exception $e) {}
+  }
+}
+
+class AzureFileUnmanagedSaveDataTest extends FileUnmanagedSaveDataTest {
+  public static function getInfo() {
+    $info = parent::getInfo();
+    $info['group'] = 'Azure Storage (core)';
+    return $info;
+  }
+
+  function setUp() {
+    parent::setUp('azure_storage');
+    $this->azureHelper = new AzureTestHelper();
+  }
+
+  function tearDown() {
+    $this->azureHelper = NULL;
+    parent::tearDown();
+  }
+}
+
+class AzureFileSaveUploadTest extends FileSaveUploadTest {
+  public static function getInfo() {
+    $info = parent::getInfo();
+    $info['group'] = 'Azure Storage (core)';
+    return $info;
+  }
+
+  function setUp() {
+    parent::setUp('azure_storage');
+    $this->azureHelper = new AzureTestHelper();
+  }
+
+  function tearDown() {
+    $this->azureHelper = NULL;
+    parent::tearDown();
+  }
+}
+
+class AzureFileDirectoryTest extends FileDirectoryTest {
+  public static function getInfo() {
+    $info = parent::getInfo();
+    $info['group'] = 'Azure Storage (core)';
+    return $info;
+  }
+
+  function setUp() {
+    parent::setUp('azure_storage');
+    $this->azureHelper = new AzureTestHelper();
+  }
+
+  function tearDown() {
+    $this->azureHelper = NULL;
+    parent::tearDown();
+  }
+}
+
+class AzureFileScanDirectoryTest extends FileScanDirectoryTest {
+  public static function getInfo() {
+    $info = parent::getInfo();
+    $info['group'] = 'Azure Storage (core)';
+    return $info;
+  }
+
+  function setUp() {
+    parent::setUp('azure_storage');
+    $this->azureHelper = new AzureTestHelper();
+  }
+
+  function tearDown() {
+    $this->azureHelper = NULL;
+    parent::tearDown();
+  }
+}
+
+class AzureFileUnmanagedDeleteTest extends FileUnmanagedDeleteTest {
+  public static function getInfo() {
+    $info = parent::getInfo();
+    $info['group'] = 'Azure Storage (core)';
+    return $info;
+  }
+
+  function setUp() {
+    parent::setUp('azure_storage');
+    $this->azureHelper = new AzureTestHelper();
+  }
+
+  function tearDown() {
+    $this->azureHelper = NULL;
+    parent::tearDown();
+  }
+}
+
+class AzureFileUnmanagedDeleteRecursiveTest extends FileUnmanagedDeleteRecursiveTest {
+  public static function getInfo() {
+    $info = parent::getInfo();
+    $info['group'] = 'Azure Storage (core)';
+    return $info;
+  }
+
+  function setUp() {
+    parent::setUp('azure_storage');
+    $this->azureHelper = new AzureTestHelper();
+  }
+
+  function tearDown() {
+    $this->azureHelper = NULL;
+    parent::tearDown();
+  }
+}
+
+class AzureFileUnmanagedMoveTest extends FileUnmanagedMoveTest {
+  public static function getInfo() {
+    $info = parent::getInfo();
+    $info['group'] = 'Azure Storage (core)';
+    return $info;
+  }
+
+  function setUp() {
+    parent::setUp('azure_storage');
+    $this->azureHelper = new AzureTestHelper();
+  }
+
+  function tearDown() {
+    $this->azureHelper = NULL;
+    parent::tearDown();
+  }
+}
+
+class AzureFileUnmanagedCopyTest extends FileUnmanagedCopyTest {
+  public static function getInfo() {
+    $info = parent::getInfo();
+    $info['group'] = 'Azure Storage (core)';
+    return $info;
+  }
+
+  function setUp() {
+    parent::setUp('azure_storage');
+    $this->azureHelper = new AzureTestHelper();
+  }
+
+  function tearDown() {
+    $this->azureHelper = NULL;
+    parent::tearDown();
+  }
+}
