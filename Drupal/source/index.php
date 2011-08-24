@@ -109,7 +109,7 @@ class Drupal
     public function runCommand($scaffolderFile, $rootPath, $diagnosticsConnectionString = 'UseDevelopmentStorage=true', 
                            $sql_azure_database, $sql_azure_username, $sql_azure_password, $sql_azure_host,
                                    $db_prefix = '', $update_free_access = 'FALSE', $drupal_hash_salt = 'Some unique value', $base_url = '',
-                                   $sync_account, $sync_key, $sync_container = 'drupal-sync', $sync_folder = 'sites', $sync_exclude_paths = '', $sync_frequency_in_seconds = '60')    {
+                                   $sync_account, $sync_key, $sync_container = 'drupal-sync', $sync_folder = 'sites', $sync_exclude_paths = '', $sync_frequency_in_seconds = '10800')    {
         // This array of course should come from $options as was originally passed. All params were passed as an array previously and this was not necessary to be built
         $this->parameters(array(
             'diagnosticsConnectionString' => $diagnosticsConnectionString,
@@ -141,8 +141,118 @@ class Drupal
         $this->log('Applying transforms...');
         $this->applyTransforms($rootPath, $this->p->valueArray() );
         $this->log('Applied transforms.');
+
+        // Ensure tmp working dir exists                
+        $tmp = realpath($rootPath) . "\\tmp";                
+        $this->log("Creating temporary build directory: " . $tmp);
+        mkdir($tmp);
+
+        $approot = realpath($rootPath) . "\WebRole";
+                
+        // Download and unpack Drupal
+        $this->log('Downloading Drupal');
+        $file = $this->curlFile("http://ftp.drupal.org/files/projects/drupal-7.7.zip", $tmp);
+        $this->log('Extracting Drupal');
+        $this->unzip($file, $tmp);
+        $this->log('Moving Drupal files to ' . $approot);
+        $this->move("$tmp\drupal-7.7", $approot);
+
+        // Download and unpack Drupal 7 driver for SQL Server and SQL Azure
+        $this->log('Downloading Drupal 7 driver for SQL Server and SQL Azure');
+        $file = $this->curlFile("http://ftp.drupal.org/files/projects/sqlsrv-7.x-1.1.zip", $tmp);
+        $this->log('Extracting Drupal 7 driver for SQL Server and SQL Azure');
+        $this->unzip($file, $tmp);
+        $this->log('Moving Drupal 7 driver for SQL Server and SQL Azure to ' . $approot . "\includes\database\sqlsrv");
+        $this->move("$tmp\sqlsrv\sqlsrv", $approot ."\includes\database\sqlsrv");
+
+        // Download and unpack Windows Azure Integration module
+        $this->log('Downloading Windows Azure Integration module');
+        $file = $this->curlFile("http://ftp.drupal.org/files/projects/azure-7.x-1.0-rc1.zip", $tmp);
+        $this->log('Extracting Windows Azure Integration module');
+        $this->unzip($file, $tmp);
+        $this->log('Moving Windows Azure Integration module to ' . $approot . "\sites\all\modules\azure");
+        $this->move("$tmp\azure", $approot ."\sites\all\modules\azure");
+
+        // Download and unpack ctools module
+        $this->log('Downloading ctools module');
+        $file = $this->curlFile("http://ftp.drupal.org/files/projects/ctools-7.x-1.0-rc1.zip", $tmp);
+        $this->log('Extracting ctools module');
+        $this->unzip($file, $tmp);
+        $this->log('Moving ctools module to ' . $approot . "\sites\all\modules\ctools");
+        $this->move("$tmp\ctools", $approot ."\sites\all\modules\ctools");
+
+        // Remove tmp build folder
+        @unlink($tmp);
         
         echo "\nNOTE: Do not forget to install the FileSystemDurabilityPlugin before packaging your application!";
         echo "\n\nCongratulations! You now have a brand new Windows Azure Drupal project at " . realpath($rootPath) . "\n";
+    }
+
+
+    private function move($src, $dest) {
+        // If source is not a directory stop processing
+        if(!is_dir($src)) return false;
+
+        // If the destination directory does not exist create it
+        if(!is_dir($dest)) { 
+            if(!mkdir($dest)) {
+                // If the destination directory could not be created stop processing
+                return false;
+            }    
+        }
+
+        // Open the source directory to read in files
+        $i = new DirectoryIterator($src);
+        foreach($i as $f) {
+            if($f->isFile()) {
+                rename($f->getRealPath(), "$dest/" . $f->getFilename());
+            } else if(!$f->isDot() && $f->isDir()) {
+                $this->move($f->getRealPath(), "$dest/$f");
+                @unlink($f->getRealPath());
+            }
+        }
+        @unlink($src);
+    }
+    
+    private function unzip($file, $destFolder) {
+        $zip = new ZipArchive();
+        if($zip->open($file) === true) {
+            $zip->extractTo("$destFolder");
+            $zip->close();
+        } else {
+            echo "Failed to open archive";
+        }
+    }
+    
+    private function curlFile($url, $destFolder) {
+        $options = array(
+            CURLOPT_RETURNTRANSFER => true,     // return web page
+            CURLOPT_HEADER         => false,    // don't return headers
+            CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+            CURLOPT_ENCODING       => "",       // handle all encodings
+            CURLOPT_USERAGENT      => "blob curler 1.2", // who am i
+            CURLOPT_AUTOREFERER    => true,     // set referer on redirect
+            CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+            CURLOPT_TIMEOUT        => 120,      // timeout on response
+            CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
+        );
+
+        $ch      = curl_init( $url );
+        curl_setopt_array( $ch, $options );
+        $content = curl_exec( $ch );
+        $err     = curl_errno( $ch );
+        $errmsg  = curl_error( $ch );
+        $header  = curl_getinfo( $ch );
+        curl_close( $ch );
+
+        $header['errno']   = $err;
+        $header['errmsg']  = $errmsg;
+        $header['content'] = $content;
+        
+        $file = explode("/", $url);
+        $file = $file[count($file)-1];
+        $this->log("Writing file $destFolder/$file");
+        file_put_contents("$destFolder/$file", $header['content']);
+        return "$destFolder/$file";
     }
 }

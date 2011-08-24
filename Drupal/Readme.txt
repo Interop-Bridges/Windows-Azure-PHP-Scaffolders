@@ -1,4 +1,6 @@
-1) Install Windows Azure SDK for PHP. Update PATH environment variable to include PHP runtime and bin folder of 
+1) Install Windows Azure SDK for PHP. 
+
+2) Update PATH environment variable to include PHP runtime and bin folder of 
    the Windows Azure SDK for PHP. You can either modify system environemnt variable or set it for a specific 
    command windows session using following command. Make sure to replace correct path for PHP runtime and Windows Azure
    SDK for PHP.
@@ -18,15 +20,15 @@
    software listed in Windows Control Panel -> Program and Features. If it says 1.4.20227.1419, then you need to uninstall your
    Windows Azure SDK and re-install it using Web Platform Installer.
 
-2) run build_scaffolder.bat command. This will produce drupal.phar file in current directory.
+3) run build_scaffolder.bat command. This will produce drupal.phar file in current directory.
 
    build_scaffolder.bat
    ====================   
    scaffolder.bat build --InputPath=.\source --OutputFile=.\drupal.phar 
 
-3) Edit run_scaffolder.bat to provide your SQL Azure and Windows Azure storage credentials.
+4) Edit run_scaffolder.bat and replace ***** with correspnding values for your SQL Azure and Windows Azure storage credentials.
 
-4) Execute run_scaffolder.bat. It will create .\build\drupal folder and put all files needed for packaging.
+5) Execute run_scaffolder.bat. It will create .\build\drupal folder and put all files needed for packaging.
 
    run_scaffolder.bat
    ==================
@@ -40,7 +42,7 @@
 	--sync_account=***** 
 	--sync_key=*****
 
-5) If needed, customize Drupal available in build\WebRole foTypycally user will include their custom modules, themes and 
+6) If needed, customize Drupal available in build\WebRole foTypycally user will include their custom modules, themes and 
    installation profiles by modifying following folders.
    - .\build\drupal\WebRole\modules
    - .\build\drupal\WebRole\themes
@@ -53,7 +55,7 @@
    - .\build\drupal\WebRole\modules\ctools
    - .\build\drupal\WebRole\includes\database\sqlsrv
 
-6) User can also edit .\build\drupal\ServiceConfiguration.cscfg if they decide to modify settings provided while executing 
+7) User can also edit .\build\drupal\ServiceConfiguration.cscfg if they decide to modify settings provided while executing 
    run_scaffolder.bat command.
 
    If user need to change the default VM size, he can update vmsize attribute in following line in .\build\drupal\ServiceDefinition.csdef file.
@@ -61,7 +63,7 @@
 
    Allowed values for vmsize attribute are "ExtraSmall", "Small", "Medium", "Large" and "ExtraLarge".
 
-7) If you need to enable RDP acecss, you need to 
+8) If you need to enable RDP acecss, you need to 
    - Uncomment following lines from .\build\drupal\ServiceDefinition.csdef file
       <Import moduleName="RemoteAccess"/>
       <Import moduleName="RemoteForwarder"/>
@@ -73,21 +75,21 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2039-12-31T23:59:59.0000000-08:00" />
    - Refer MSDN documentation for settings above values.
 
-8) Once you have finalized your build folder, execute package_scaffolder.bat command. It will create follwing two files inside package folder
+9) Once you have finalized your build folder, execute package_scaffolder.bat command. It will create follwing two files inside package folder
    .\package\drupal.cspkg and .\package\ServiceConfiguration.cscfg. Please make sure that you have installed FileSystemDurabilityPlugin.
    
    package_scaffolder.bat
    ======================
    package.bat create --InputPath=.\build\drupal --RunDevFabric=false --OutputPath=.\package
 
-9) If needed you can edit the .\package\ServiceConfiguration.cscfg 
+10) If needed you can edit the .\package\ServiceConfiguration.cscfg 
 
-10) Finally deploy .\package\drupal.cspkg and .\package\ServiceConfiguration.cscfg file to Windows Azure.
+11) Finally deploy .\package\drupal.cspkg and .\package\ServiceConfiguration.cscfg file to Windows Azure.
 
-11) Once drupal deployment is ready, visit the install.php page of your drupal site and confiure your drupal.
+12) Once drupal deployment is ready, visit the install.php page of your drupal site and confiure your drupal.
     i.e. visit http://yourapp.cloudapp.net/install.php
 
-12) Use of file synchronization is not needed for basic Drupal functionality. But if dynamic installation of modules/theme on running site without repackage/upgrade 
+13) Use of file synchronization is not needed for basic Drupal functionality. But if dynamic installation of modules/theme on running site without repackage/upgrade 
    is dealbreaker for Drupal sites to move to Windows Azure, file synchronization can be used to support this feature.
 
-13) Once you Drupal is configured as per your requirement, you can increase instance count using Windows Azure portal. 
+14) Once your drupal is configured as per your requirement, you can increase instance count using Windows Azure portal. 
