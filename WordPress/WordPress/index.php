@@ -153,7 +153,7 @@ class WordPress
                                    $DB_CHARSET = 'utf8', $DB_COLLATE = '', $AUTH_KEY, $SECURE_AUTH_KEY, $LOGGED_IN_SALT, $NONCE_SALT, $DB_TABLE_PREFIX = 'wp_', $WPLANG = '', $WP_DEBUG = 'false', 
                                    $SAVEQUERIES = 'false', $RELOCATE = 'false', $WP_ALLOW_MULTISITE = "false", $MULTISITE = 'false', $SUBDOMAIN_INSTALL = 'false',
                                    $base = '/', $DOMAIN_CURRENT_SITE = '', $PATH_CURRENT_SITE = '/', $SITE_ID_CURRENT_SITE = '1', $BLOG_ID_CURRENT_SITE = '1',
-                                   $sync_account, $sync_key, $sync_container = 'wpsync', $sync_folder = 'wp-content', $sync_exclude_paths = '', $sync_mode = '60', $sync_queue = '')	{
+                                   $sync_account, $sync_key, $sync_container = 'wpsync', $sync_folder = 'wp-content', $sync_exclude_paths = '', $sync_mode = '7200', $sync_queue = '')	{
 
 
                 // This array of course should come from $options as was originally passed. All params were passed as an array previously and this was not necessary to be built
