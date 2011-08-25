@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="PhpOnAzure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <WebRole name="WebRole" enableNativeCodeExecution="true">
+    <Sites>
+      <Site name="WebRole" physicalDirectory="./WebRole">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="HttpEndpoint" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <Startup>
+      <Task commandLine="install-php.cmd >> .\startup-tasks-log.txt 2>>.\startup-tasks-error-log.txt" executionContext="elevated" taskType="simple" /> 
+    </Startup>
+    <Endpoints>
+      <InputEndpoint name="HttpEndpoint" protocol="http" port="80" />
+    </Endpoints>
+    <Imports>
+      <Import moduleName="Diagnostics"/>
+      <Import moduleName="FileSystemDurabilityPlugin" />
+      <!-- For RDP access. Commented by default -->
+      <!--
+      <Import moduleName="RemoteAccess"/>
+      <Import moduleName="RemoteForwarder"/>
+      -->
+    </Imports>
+    <ConfigurationSettings>
+      <Setting name="sql_azure_database" />
+      <Setting name="sql_azure_username" />
+      <Setting name="sql_azure_password" />
+      <Setting name="sql_azure_host" />
+      <Setting name="db_prefix" />
+      <Setting name="update_free_access" />
+      <Setting name="drupal_hash_salt" />
+      <Setting name="base_url" />
+    </ConfigurationSettings>
+  </WebRole>
+</ServiceDefinition>
