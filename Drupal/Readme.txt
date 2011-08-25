@@ -73,21 +73,25 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2039-12-31T23:59:59.0000000-08:00" />
    - Refer MSDN documentation for settings above values.
 
-9) Once you have finalized your build folder, execute package_scaffolder.bat command. It will create follwing two files inside package folder
-   .\package\drupal.cspkg and .\package\ServiceConfiguration.cscfg. Please make sure that you have installed FileSystemDurabilityPlugin.
+9) Once you have finalized your build folder, you need to install the Windows Azure FileSystemDurabilityPlugin. The Windows Azure FileSystemDurabilityPlugin ensures that newly added themes/modules on running Drupal site are synchronized across all running instances. The FileSystemDurabilityPlugin is hosted on Github. Just copy it into the Windows Azure SDK folder and configure it through the ServiceConfiguration.cscfg file before packaging. Please download the https://github.com/downloads/Interop-Bridges/Windows-Azure-File-System-Durability-Plugin/FileSystemDurabilityPlugin.zip and
+extract FileSystemDurabilityPlugin folder to C:\Program Files\Windows Azure SDK\<YOUR VERSION>\bin\plugins
+
+10) Execute package_scaffolder.bat command. It will create follwing two files inside package folder
+   .\package\drupal.cspkg and .\package\ServiceConfiguration.cscfg. Please make sure that you have installed
+   FileSystemDurabilityPlugin before running package_scaffolder.bat command.
    
    package_scaffolder.bat
    ======================
    package.bat create --InputPath=.\build\drupal --RunDevFabric=false --OutputPath=.\package
 
-10) If needed you can edit the .\package\ServiceConfiguration.cscfg 
+11) If needed you can edit the .\package\ServiceConfiguration.cscfg 
 
-11) Finally deploy .\package\drupal.cspkg and .\package\ServiceConfiguration.cscfg file to Windows Azure.
+12) Finally deploy .\package\drupal.cspkg and .\package\ServiceConfiguration.cscfg file to Windows Azure.
 
-12) Once drupal deployment is ready, visit the install.php page of your drupal site and confiure your drupal.
+13) Once drupal deployment is ready, visit the install.php page of your drupal site and confiure your drupal.
     i.e. visit http://yourapp.cloudapp.net/install.php
 
-13) On Windows Azure, one must enable Windows Azure Storage module and configure it for storing all media files. Please
+14) On Windows Azure, one must enable Windows Azure Storage module and configure it for storing all media files. Please
     refer http://azurephp.interoperabilitybridges.com/articles/how-to-deploy-drupal-to-windows-azure-using-the-drupal-scaffold for details. 
 
-14) Once your drupal is configured as per your requirement, you can increase instance count using Windows Azure portal. 
+15) Once your drupal is configured as per your requirement, you can increase instance count using Windows Azure portal.
