@@ -1,11 +1,11 @@
-1) Install Windows Azure SDK for PHP. 
+1) Install Windows Azure SDK for PHP. Please refer http://azurephp.interoperabilitybridges.com/articles/setup-the-windows-azure-sdk-for-php for details.
 
 2) Update PATH environment variable to include PHP runtime and bin folder of 
    the Windows Azure SDK for PHP. You can either modify system environemnt variable or set it for a specific 
    command windows session using following command. Make sure to replace correct path for PHP runtime and Windows Azure
    SDK for PHP.
 
-   SET PATH=%PATH%;C:\Program Files (x86)\PHP\v5.3\;C:\phpazure4.0.2\bin
+   SET PATH=%PATH%;C:\Program Files (x86)\PHP\v5.3\;C:\Program Files\Windows Azure SDK\bin
 
    Also add following line to your php.ini file. You need this to create .phar file using scaffolder.bat command.
    phar.readonly = Off
@@ -44,15 +44,13 @@
 
 6) If needed, customize Drupal available in build\WebRole foTypycally user will include their custom modules, themes and 
    installation profiles by modifying following folders.
-   - .\build\drupal\WebRole\modules
-   - .\build\drupal\WebRole\themes
    - .\build\drupal\WebRole\sites\all\modules
    - .\build\drupal\WebRole\sites\all\themes
    - .\build\drupal\WebRole\profiles
 
    Note: Please do not delete following modules. They are essentials for running Drupal on Windows Azure.
-   - .\build\drupal\WebRole\modules\azure
-   - .\build\drupal\WebRole\modules\ctools
+   - .\build\drupal\WebRole\sites\all\modules\azure
+   - .\build\drupal\WebRole\sites\all\modules\ctools
    - .\build\drupal\WebRole\includes\database\sqlsrv
 
 7) User can also edit .\build\drupal\ServiceConfiguration.cscfg if they decide to modify settings provided while executing 
@@ -75,21 +73,25 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2039-12-31T23:59:59.0000000-08:00" />
    - Refer MSDN documentation for settings above values.
 
-9) Once you have finalized your build folder, execute package_scaffolder.bat command. It will create follwing two files inside package folder
-   .\package\drupal.cspkg and .\package\ServiceConfiguration.cscfg. Please make sure that you have installed FileSystemDurabilityPlugin.
+9) Once you have finalized your build folder, you need to install the Windows Azure FileSystemDurabilityPlugin. The Windows Azure FileSystemDurabilityPlugin ensures that newly added themes/modules on running Drupal site are synchronized across all running instances. The FileSystemDurabilityPlugin is hosted on Github. Just copy it into the Windows Azure SDK folder and configure it through the ServiceConfiguration.cscfg file before packaging. Please download the https://github.com/downloads/Interop-Bridges/Windows-Azure-File-System-Durability-Plugin/FileSystemDurabilityPlugin.zip and
+extract FileSystemDurabilityPlugin folder to C:\Program Files\Windows Azure SDK\<YOUR VERSION>\bin\plugins
+
+10) Execute package_scaffolder.bat command. It will create follwing two files inside package folder
+   .\package\drupal.cspkg and .\package\ServiceConfiguration.cscfg. Please make sure that you have installed
+   FileSystemDurabilityPlugin before running package_scaffolder.bat command.
    
    package_scaffolder.bat
    ======================
    package.bat create --InputPath=.\build\drupal --RunDevFabric=false --OutputPath=.\package
 
-10) If needed you can edit the .\package\ServiceConfiguration.cscfg 
+11) If needed you can edit the .\package\ServiceConfiguration.cscfg 
 
-11) Finally deploy .\package\drupal.cspkg and .\package\ServiceConfiguration.cscfg file to Windows Azure.
+12) Finally deploy .\package\drupal.cspkg and .\package\ServiceConfiguration.cscfg file to Windows Azure.
 
-12) Once drupal deployment is ready, visit the install.php page of your drupal site and confiure your drupal.
+13) Once drupal deployment is ready, visit the install.php page of your drupal site and confiure your drupal.
     i.e. visit http://yourapp.cloudapp.net/install.php
 
-13) Use of file synchronization is not needed for basic Drupal functionality. But if dynamic installation of modules/theme on running site without repackage/upgrade 
-   is dealbreaker for Drupal sites to move to Windows Azure, file synchronization can be used to support this feature.
+14) On Windows Azure, one must enable Windows Azure Storage module and configure it for storing all media files. Please
+    refer http://azurephp.interoperabilitybridges.com/articles/how-to-deploy-drupal-to-windows-azure-using-the-drupal-scaffold for details. 
 
-14) Once your drupal is configured as per your requirement, you can increase instance count using Windows Azure portal. 
+15) Once your drupal is configured as per your requirement, you can increase instance count using Windows Azure portal.
