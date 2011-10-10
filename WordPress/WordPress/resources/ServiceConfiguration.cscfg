@@ -41,6 +41,8 @@
     <Setting name="FileSystemDurabilityPlugin.LocalFolderToSync" value="$sync_folder$" /> <!-- wp-content -->
     <Setting name="FileSystemDurabilityPlugin.ExcludePathsFromSync" value="$sync_exclude_paths$"/> <!-- "" -->
     <Setting name="FileSystemDurabilityPlugin.SyncFrequencyInSeconds" value="$sync_frequency$" /> <!-- 7200 -->
+    <Setting name="FileSystemDurabilityPlugin.FileNameIncludesToSync" value="fields_map.parsed_types.php" /> <!-- fields_map.parsed_types.php -->
+    <Setting name="FileSystemDurabilityPlugin.ExcludeSubDirectories" value="true" /> <!-- true -->
 
 
       <!-- For RDP access. Commented by default -->
