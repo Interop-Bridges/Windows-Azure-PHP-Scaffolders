@@ -19,7 +19,7 @@
 
 
 
-if(!isset($_SERVER['INSTANCE_NAME']) || strstr(strtolower($_SERVER['INSTANCE_NAME']), 'deployment')) {
+if($_SERVER['SERVER_NAME'] == 'localhost' || !isset($_SERVER['INSTANCE_NAME']) || strstr(strtolower($_SERVER['INSTANCE_NAME']), 'deployment')) {
       // ** SQL Azure settings  ** //
     /** The name of the database for WordPress. Please create database before starting WordPress configuration */
     define('DB_NAME', '$DB_NAME$');

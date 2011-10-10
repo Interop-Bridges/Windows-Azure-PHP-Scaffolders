@@ -121,6 +121,7 @@ class WordPress
              $this->p->add('sync_folder', false, 'wp-content', 'WordPress folder to watch for changes');
              $this->p->add('sync_exclude_paths', false, '', 'Path to not sync');
              $this->p->add('sync_frequency', false, '7200', 'Sync time interval in seconds'); 
+             $this->p->add('source', false, '', 'If there is an existing WordPress code base you can use it via a path');
 
 
              if(!$this->p->verify()) die($this->p->getError());
@@ -145,13 +146,19 @@ class WordPress
         $this->log("Creating temporary build directory: " . $tmp);
         $fs->mkdir($tmp);
 
-        // Download and unpack WordPress
-        $this->log('Downloading WordPress');
-        $file = $this->curlFile("http://wordpress.org/wordpress-3.2.1.zip", $tmp);
-        $this->log('Extracting WordPress');
-        $this->unzip($file, $tmp);
-        $this->log('Moving WordPress files to ' . $this->mAppRoot);
-        $fs->move("$tmp\wordpress", $this->mAppRoot);
+        if($this->p->get('source') != '' && $fs->exists($this->p->get('source'))) {
+            // Use WordPress codebase from source parameter
+            $this->log("Copying WordPress from " . $this->p->get('source'));
+            $fs->copy($this->p->get('source'), $this->mAppRoot);
+        } else {
+            // Download and unpack WordPress
+            $this->log('Downloading WordPress');
+            $file = $this->curlFile("http://wordpress.org/wordpress-3.2.1.zip", $tmp);
+            $this->log('Extracting WordPress');
+            $this->unzip($file, $tmp);
+            $this->log('Moving WordPress files to ' . $this->mAppRoot);
+            $fs->move("$tmp\wordpress", $this->mAppRoot);
+        }
 
         // Download and unpack DB abstraction layer
         $this->log('Downloading Database Abstraction Layer');
