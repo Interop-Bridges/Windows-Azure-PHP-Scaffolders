@@ -11,6 +11,6 @@ if (![Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment]::CurrentRoleInstanc
     if ($rdRoleId -ne [Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment]::CurrentRoleInstance.Id) {
         Restart-Computer
     }
+    [Environment]::SetEnvironmentVariable('Path', $env:RoleRoot + '\base\x86;' + [Environment]::GetEnvironmentVariable('Path', 'Machine'), 'Machine')
 }
 
-[Environment]::SetEnvironmentVariable('Path', $env:RoleRoot + '\base\x86;' + [Environment]::GetEnvironmentVariable('Path', 'Machine'), 'Machine')

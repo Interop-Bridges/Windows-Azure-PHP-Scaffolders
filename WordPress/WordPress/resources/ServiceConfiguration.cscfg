@@ -3,8 +3,7 @@
   <Role name="WebRole">
     <Instances count="1" />
     <ConfigurationSettings>
-     <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="$diagnosticsConnectionString$" />
-      
+     <!-- <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />      -->
       <Setting name="DB_NAME" value="$DB_NAME$" />
       <Setting name="DB_USER" value="$DB_USER$" />
       <Setting name="DB_PASSWORD" value="$DB_PASSWORD$" />
@@ -34,15 +33,30 @@
       <Setting name="SITE_ID_CURRENT_SITE" value="$SITE_ID_CURRENT_SITE$" /> <!-- 1 -->
       <Setting name="BLOG_ID_CURRENT_SITE" value="$BLOG_ID_CURRENT_SITE$" /> <!-- 1 -->
 
+       
 
-      <Setting name="FileSystemDurabilityPlugin.StorageAccountName" value="$sync_account$" />
-        <Setting name="FileSystemDurabilityPlugin.StorageAccountPrimaryKey" value="$sync_key$" />
-        <Setting name="FileSystemDurabilityPlugin.SyncContainerName" value="$sync_container$" />
-        <Setting name="FileSystemDurabilityPlugin.LocalFolderToSync" value="$sync_folder$" />
-        <Setting name="FileSystemDurabilityPlugin.ExcludePathsFromSync" value="$sync_exclude_paths$"/>
-        <Setting name="FileSystemDurabilityPlugin.SyncFrequencyInSeconds" value="$sync_mode$" />
-  
+    <Setting name="FileSystemDurabilityPlugin.StorageAccountName" value="$sync_account$" />
+    <Setting name="FileSystemDurabilityPlugin.StorageAccountPrimaryKey" value="$sync_key$" />
+    <Setting name="FileSystemDurabilityPlugin.SyncContainerName" value="$sync_container$" /> <!-- wpsync -->
+    <Setting name="FileSystemDurabilityPlugin.LocalFolderToSync" value="$sync_folder$" /> <!-- wp-content -->
+    <Setting name="FileSystemDurabilityPlugin.ExcludePathsFromSync" value="$sync_exclude_paths$"/> <!-- "" -->
+    <Setting name="FileSystemDurabilityPlugin.SyncFrequencyInSeconds" value="$sync_frequency$" /> <!-- 7200 -->
+
+
+      <!-- For RDP access. Commented by default -->
+      <!--
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="****" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="****" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2039-12-31T23:59:59.0000000-08:00" />
+      -->
     </ConfigurationSettings>
-
+    <!-- Certificate for RDP access. Commented by default -->
+    <!--
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" thumbprintAlgorithm="sha1"/>
+    </Certificates>
+    -->
   </Role>
 </ServiceConfiguration>

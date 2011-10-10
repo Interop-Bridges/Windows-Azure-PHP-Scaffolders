@@ -8,16 +8,27 @@
         </Bindings>
       </Site>
     </Sites>
-   <Startup>
+    <Startup>
       <Task commandLine="add-environment-variables.cmd" executionContext="elevated" taskType="simple" />
-      <Task commandLine="install-php.cmd" executionContext="elevated" taskType="simple" />
-    </Startup> 
+      <Task commandLine="install-php.cmd" executionContext="elevated" taskType="simple">
+        <Environment>
+          <Variable name="EMULATED">
+            <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+          </Variable>
+        </Environment>
+      </Task>
+    </Startup>
     <Endpoints>
       <InputEndpoint name="HttpEndpoint" protocol="http" port="80" />
     </Endpoints>
     <Imports>
-      <Import moduleName="Diagnostics"/>
+    <!--  <Import moduleName="Diagnostics"/> -->
       <Import moduleName="FileSystemDurabilityPlugin" />
+      <!-- For RDP access. Commented by default 
+      
+      <Import moduleName="RemoteAccess"/>
+      <Import moduleName="RemoteForwarder"/>
+      -->
     </Imports>
     <ConfigurationSettings>
       <Setting name="DB_NAME"/>
@@ -48,9 +59,6 @@
       <Setting name="PATH_CURRENT_SITE" /> 
       <Setting name="SITE_ID_CURRENT_SITE" /> 
       <Setting name="BLOG_ID_CURRENT_SITE"  /> 
-
-
-
     </ConfigurationSettings>
   </WebRole>
 </ServiceDefinition>
