@@ -19,7 +19,9 @@
       <Setting name="FileSystemDurabilityPlugin.StorageAccountPrimaryKey" value="$sync_key$" />
       <Setting name="FileSystemDurabilityPlugin.SyncContainerName" value="$sync_container$" />
       <Setting name="FileSystemDurabilityPlugin.LocalFolderToSync" value="$sync_folder$" />
+      <Setting name="FileSystemDurabilityPlugin.FileNameIncludesToSync" value="" />
       <Setting name="FileSystemDurabilityPlugin.ExcludePathsFromSync" value="$sync_exclude_paths$"/>
+      <Setting name="FileSystemDurabilityPlugin.ExcludeSubDirectories" value="false" />
       <Setting name="FileSystemDurabilityPlugin.SyncFrequencyInSeconds" value="$sync_frequency_in_seconds$" />
 
       <!-- For RDP access. Commented by default -->

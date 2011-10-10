@@ -128,6 +128,7 @@ class Drupal
             'sync_exclude_paths'          => $sync_exclude_paths,
             'sync_frequency_in_seconds'   => $sync_frequency_in_seconds,
         ));
+
         // Load Phar
         $phar = new Phar($scaffolderFile);
         
@@ -151,11 +152,11 @@ class Drupal
                 
         // Download and unpack Drupal
         $this->log('Downloading Drupal');
-        $file = $this->curlFile("http://ftp.drupal.org/files/projects/drupal-7.7.zip", $tmp);
+        $file = $this->curlFile("http://ftp.drupal.org/files/projects/drupal-7.8.zip", $tmp);
         $this->log('Extracting Drupal');
         $this->unzip($file, $tmp);
         $this->log('Moving Drupal files to ' . $approot);
-        $this->move("$tmp\drupal-7.7", $approot);
+        $this->move("$tmp\drupal-7.8", $approot);
 
         // Download and unpack Drupal 7 driver for SQL Server and SQL Azure
         $this->log('Downloading Drupal 7 driver for SQL Server and SQL Azure');
@@ -163,31 +164,47 @@ class Drupal
         $this->log('Extracting Drupal 7 driver for SQL Server and SQL Azure');
         $this->unzip($file, $tmp);
         $this->log('Moving Drupal 7 driver for SQL Server and SQL Azure to ' . $approot . "\includes\database\sqlsrv");
-        $this->move("$tmp\sqlsrv\sqlsrv", $approot ."\includes\database\sqlsrv");
+        $this->move("$tmp\sqlsrv\sqlsrv", $approot . "\includes\database\sqlsrv");
+
+        // Apply patch for Drupal 7 driver for SQL Server (http://drupal.org/node/1300312)
+        $file_name_to_patch = $approot . "\includes\database\sqlsrv\database.inc";
+        $content = file_get_contents($file_name_to_patch);
+        $new_content = str_replace(
+                "'/^RELEASE SAVEPOINT (.*)$/' => '-- $0'",
+                "'/^RELEASE SAVEPOINT (.*)$/' => 'SELECT 1 /* $0 */'",
+                $content);
+        file_put_contents($file_name_to_patch, $new_content);
 
         // Download and unpack Windows Azure Integration module
         $this->log('Downloading Windows Azure Integration module');
         $file = $this->curlFile("http://ftp.drupal.org/files/projects/azure-7.x-1.0-rc1.zip", $tmp);
         $this->log('Extracting Windows Azure Integration module');
         $this->unzip($file, $tmp);
-        $this->log('Moving Windows Azure Integration module to ' . $approot . "\sites\all\modules\azure");
-        $this->move("$tmp\azure", $approot ."\sites\all\modules\azure");
+        $this->log('Moving Windows Azure Integration module to ' . $approot . "\sites\\all\modules\\azure");
+        $this->move("$tmp\\azure", $approot . "\sites\\all\modules\\azure");
+    
+        // Unpack Windows Azure SDK for PHP
+        $this->log('Extracting Windows Azure SDK for PHP');
+        $this->unzip($approot . "\\resources\phpazure.zip", $approot . "\sites\\all\modules\\azure");
 
         // Download and unpack ctools module
         $this->log('Downloading ctools module');
         $file = $this->curlFile("http://ftp.drupal.org/files/projects/ctools-7.x-1.0-rc1.zip", $tmp);
         $this->log('Extracting ctools module');
         $this->unzip($file, $tmp);
-        $this->log('Moving ctools module to ' . $approot . "\sites\all\modules\ctools");
-        $this->move("$tmp\ctools", $approot ."\sites\all\modules\ctools");
+        $this->log('Moving ctools module to ' . $approot . "\sites\\all\modules\\ctools");
+        $this->move("$tmp\\ctools", $approot . "\sites\\all\modules\\ctools");
 
         // Remove tmp build folder
         @unlink($tmp);
         
-        echo "\nNOTE: Do not forget to install the FileSystemDurabilityPlugin before packaging your application!";
-        echo "\n\nCongratulations! You now have a brand new Windows Azure Drupal project at " . realpath($rootPath) . "\n";
+	echo "\n";
+	echo "\nNOTE: This scaffolder needs FileSystemDurabilityPlugin v1.1. This is not compatible with old version of FileSystemDurabilityPlugin.";
+	echo "\nPlease make sure to install the FileSystemDurabilityPlugin before packaging your application.";
+	echo "\n";
+	echo "\nDownload URL: https://github.com/downloads/Interop-Bridges/Windows-Azure-File-System-Durability-Plugin/FileSystemDurabilityPlugin-v1.1.zip";
+	echo "\n\n";
     }
-
 
     private function move($src, $dest) {
         // If source is not a directory stop processing
