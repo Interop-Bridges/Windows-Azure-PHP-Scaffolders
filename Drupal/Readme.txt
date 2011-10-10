@@ -10,15 +10,13 @@
    Also add following line to your php.ini file. You need this to create .phar file using scaffolder.bat command.
    phar.readonly = Off
 
-   In addition, you need to install FileSystemDurabilityPlugin.zip into Windows Azure SDK 1.4. Please extract the
-   https://github.com/downloads/Interop-Bridges/Windows-Azure-File-System-Durability-Plugin/FileSystemDurabilityPlugin.zip
-   file into "C:\Program Files\Windows Azure SDK\v1.4\bin\plugins" folder.
-   Note: You may need administrative rights to this SDK folder.
+   In addition, you need to install FileSystemDurabilityPlugin-v1.1.zip into Windows Azure SDK 1.5. Please extract the
+   https://github.com/downloads/Interop-Bridges/Windows-Azure-File-System-Durability-Plugin/FileSystemDurabilityPlugin-v1.1.zip
+   file into "C:\Program Files\Windows Azure SDK\v1.5\bin\plugins" folder.
 
-   Note: Please make sure to install Windows Azure SDK 1.4 Refresh that is available in Web Platform Installer. The version 
-   number for this SDK is 1.4.20407.2049. This is needed for FileSystemDurabilityPlugin. You can check the version number in
-   software listed in Windows Control Panel -> Program and Features. If it says 1.4.20227.1419, then you need to uninstall your
-   Windows Azure SDK and re-install it using Web Platform Installer.
+   Note: You may need administrative rights to this SDK folder. This scaffolder does not work with old version of FileSystemDurabilityPlugin.
+
+   Note: Please make sure to install Windows Azure SDK 1.5 that is available in Web Platform Installer.
 
 3) run build_scaffolder.bat command. This will produce drupal.phar file in current directory.
 
@@ -33,14 +31,14 @@
    run_scaffolder.bat
    ==================
    scaffolder.bat run --Scaffolder=drupal.phar
-   	--OutputPath=.\build\drupal 
-	--DiagnosticsConnectionString="DefaultEndpointsProtocol=https;AccountName=*****;AccountKey=*****"  
-	--sql_azure_database=***** 
-	--sql_azure_username=*****@***** 
-	--sql_azure_password=***** 
-	--sql_azure_host=*****.database.windows.net 
-	--sync_account=***** 
-	--sync_key=*****
+        --OutputPath=.\build\drupal 
+        --DiagnosticsConnectionString="DefaultEndpointsProtocol=https;AccountName=*****;AccountKey=*****"  
+        --sql_azure_database=***** 
+        --sql_azure_username=*****@***** 
+        --sql_azure_password=***** 
+        --sql_azure_host=*****.database.windows.net 
+        --sync_account=***** 
+        --sync_key=*****
 
 6) If needed, customize Drupal available in build\WebRole foTypycally user will include their custom modules, themes and 
    installation profiles by modifying following folders.
@@ -73,8 +71,10 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2039-12-31T23:59:59.0000000-08:00" />
    - Refer MSDN documentation for settings above values.
 
-9) Once you have finalized your build folder, you need to install the Windows Azure FileSystemDurabilityPlugin. The Windows Azure FileSystemDurabilityPlugin ensures that newly added themes/modules on running Drupal site are synchronized across all running instances. The FileSystemDurabilityPlugin is hosted on Github. Just copy it into the Windows Azure SDK folder and configure it through the ServiceConfiguration.cscfg file before packaging. Please download the https://github.com/downloads/Interop-Bridges/Windows-Azure-File-System-Durability-Plugin/FileSystemDurabilityPlugin.zip and
+9) Once you have finalized your build folder, you need to install the Windows Azure FileSystemDurabilityPlugin v1.1. The Windows Azure FileSystemDurabilityPlugin ensures that newly added themes/modules on running Drupal site are synchronized across all running instances. The FileSystemDurabilityPlugin is hosted on Github. Just copy it into the Windows Azure SDK folder and configure it through the ServiceConfiguration.cscfg file before packaging. Please download the https://github.com/downloads/Interop-Bridges/Windows-Azure-File-System-Durability-Plugin/FileSystemDurabilityPlugin-v1.1.zip and
 extract FileSystemDurabilityPlugin folder to C:\Program Files\Windows Azure SDK\<YOUR VERSION>\bin\plugins
+
+Note: This version of scaffolder is not compatible with old version of FileSystemDurabilityPlugin. You must replace old version with v1.1.
 
 10) Execute package_scaffolder.bat command. It will create follwing two files inside package folder
    .\package\drupal.cspkg and .\package\ServiceConfiguration.cscfg. Please make sure that you have installed
