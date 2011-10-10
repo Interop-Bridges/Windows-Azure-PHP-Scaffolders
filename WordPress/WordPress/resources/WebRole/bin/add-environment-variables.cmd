@@ -1,4 +1,5 @@
 @echo off
+cd "%~dp0"
 ECHO "Adding extra environment variables..." >> ..\startup-tasks-log.txt
 
 powershell.exe Set-ExecutionPolicy Unrestricted
