@@ -15,7 +15,7 @@ echo Building scaffold .phar file
  call scaffolder build -in="%PWD%\WordPress" -out="%PWD%\build\WordPress.phar"
 
 echo Creating project directories
-call scaffolder run -out="%PWD%\build\WordPress" -s="%PWD%\build\WordPress.phar" -DB_NAME=wordpress_ben -DB_USER="satish@ltkw9g5pq3" -DB_PASSWORD="p7HmRW9Tp6FK" -DB_HOST="ltkw9g5pq3.database.windows.net" -AUTH_KEY="ASDF" --SECURE_AUTH_KEY="ASDF" --LOGGED_IN_SALT="ASDF" --NONCE_KEY="ASDF" --AUTH_SALT="ASDF" --SECURE_AUTH_SALT="ASDF" --LOGGED_IN_SALT="ASDF" --NONCE_SALT="ASDF" -sync_account="belobastor" -sync_key="x9dwLT6jaNgLvqVDhkQ24ZQtPeedoJqKobxkaOAjPc5/+jpI8IFUsaCiowyhKu69UWl70IdHsv2vCfRqiCPkiA==" 
+call scaffolder run -out="%PWD%\build\WordPress" -s="%PWD%\build\WordPress.phar" -DB_NAME database_name -DB_USER "user@lhost" -DB_PASSWORD "*******" -DB_HOST="******.database.windows.net"  -sync_account "account enpoint" -sync_key "account key" 
 
 REM -out="%PWD%\build\WordPress"
 
