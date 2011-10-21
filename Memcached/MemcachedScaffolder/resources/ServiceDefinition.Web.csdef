@@ -1,0 +1,30 @@
+  <WebRole name="$RoleName$" enableNativeCodeExecution="true">
+    <Sites>
+      <Site name="Web" physicalDirectory="./$RoleName$">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="HttpEndpoint" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <Startup>
+      <Task commandLine="add-environment-variables.cmd" executionContext="elevated" taskType="simple" />
+      <Task commandLine="install-php.cmd" executionContext="elevated" taskType="simple">
+        <Environment>
+          <Variable name="EMULATED">
+            <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+          </Variable>
+        </Environment>
+      </Task>
+	  <Task commandLine="memcached.cmd" executionContext="elevated" taskType="background" />
+      <Task commandLine="monitor-environment.cmd" executionContext="elevated" taskType="background" />
+    </Startup>
+    <Endpoints>
+      <InputEndpoint name="HttpEndpoint" protocol="http" port="$HttpPort$" />
+      <InternalEndpoint name="MemcachedEndpoint" protocol="tcp" />
+    </Endpoints>
+    <Imports>
+      <Import moduleName="Diagnostics"/>
+    </Imports>
+    <ConfigurationSettings>
+    </ConfigurationSettings>
+  </WebRole>
