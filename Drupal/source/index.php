@@ -1,51 +1,34 @@
 <?php
-/**
- * Copyright (c) 2009 - 2011, RealDolmen
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of RealDolmen nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY RealDolmen ''AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL RealDolmen BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * @category   Microsoft
- * @package    Microsoft_WindowsAzure
- * @copyright  Copyright (c) 2009 - 2011, RealDolmen (http://www.realdolmen.com)
- * @license    http://phpazure.codeplex.com/license
- * @version    $Id: SharedKeyCredentials.php 14561 2009-05-07 08:05:12Z unknown $
- */
+/*
+Copyright 2011 Microsoft Corporation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 
 require_once('Params.class.php');
 /**
  * @category   Microsoft
  * @package    Microsoft_WindowsAzure_CommandLine
- * @copyright  Copyright (c) 2009 - 2011, RealDolmen (http://www.realdolmen.com)
- * @license    http://phpazure.codeplex.com/license
+ * @copyright  Copyright 2011 Microsoft Corporation
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
  * 
  * @command-handler Drupal
  * 
  * @command-handler-description Windows Azure SDK for PHP default scaffolder.
  * @command-handler-header Windows Azure SDK for PHP
- * @command-handler-header Copyright (c) 2009 - 2011, RealDolmen (http://www.realdolmen.com)
+ * @command-handler-header Copyright 2011 Microsoft Corporation
  * @command-handler-footer 
- * @command-handler-footer The DefaultScaffolder automatically installs PHP
+ * @command-handler-footer This Drupal automatically installs PHP
  * @command-handler-footer to the Windows Azure virtual machine. If a customized
  * @command-handler-footer php.ini is required, add it in the /php folder after
  * @command-handler-footer running the scaffolder.
@@ -53,9 +36,7 @@ require_once('Params.class.php');
 class Drupal
     extends Microsoft_WindowsAzure_CommandLine_PackageScaffolder_PackageScaffolderAbstract
 {
-    
-    
-            // this should be in parent
+        // this should be in parent
         protected $p;
         
         // this could be
@@ -63,21 +44,15 @@ class Drupal
                 $this->p = new Params(); // this should be in the parent
                 $this->p->add('diagnosticsConnectionString', false, 'UseDevelopmentStorage=true', 'Connections string to storage for diagnostics');
                 $this->p->add('sql_azure_database', true, '', 'SQL Azure database name for Drupal');
-                 $this->p->add('sql_azure_username', true, '', 'User account name with permissions to the Drupal database');
-                 $this->p->add('sql_azure_password', true, '', 'Password of account with permissions to the Drupal database');
-                 $this->p->add('sql_azure_host', true, '', 'SQL Azure database host');
-                 $this->p->add('db_prefix', false, '', 'Drupal database table prefix');
-                 $this->p->add('update_free_access', false, 'FALSE', 'Access control for update.php script.');
-                 $this->p->add('drupal_hash_salt', false, 'Some unique value', 'Drupal hash salt key for security');
-                 $this->p->add('base_url', false, '', 'Drupal base url');
-                 $this->p->add('sync_account', true, '', 'Windows Azure Storage account endpoint');
-                 $this->p->add('sync_key', true, '', 'Windows Azure Storage account key');
-                 $this->p->add('sync_container', false, 'drupal-sync', 'Windows Azure Storage container to sync files to');
-                 $this->p->add('sync_folder', false, 'sites', 'Drupal folder to watch for changes');
-                 $this->p->add('sync_exclude_paths', false, '', 'Path to not sync');
-                 $this->p->add('sync_frequency_in_seconds', false, '10800', 'Sync time interval in seconds, use -1 for synchronizing only once.');
+                $this->p->add('sql_azure_username', true, '', 'User account name with permissions to the Drupal database');
+                $this->p->add('sql_azure_password', true, '', 'Password of account with permissions to the Drupal database');
+                $this->p->add('sql_azure_host', true, '', 'SQL Azure database host');
+                $this->p->add('db_prefix', false, '', 'Drupal database table prefix');
+                $this->p->add('update_free_access', false, 'FALSE', 'Access control for update.php script.');
+                $this->p->add('drupal_hash_salt', false, 'Some unique value', 'Drupal hash salt key for security');
+                $this->p->add('base_url', false, '', 'Drupal base url');
                  
-                 $this->p->verify($options); // this should be in the parent
+                $this->p->verify($options); // this should be in the parent
         }
     
     /**
@@ -98,18 +73,10 @@ class Drupal
      * @command-parameter-for $update_free_access Argv|ConfigFile|Env --update_free_access|-update_free_access Optional. Access control for update.php script
      * @command-parameter-for $drupal_hash_salt Argv|ConfigFile|Env --drupal_hash_salt|-drupal_hash_salt Optional. Drupal hash salt key for security
      * @command-parameter-for $base_url Argv|ConfigFile|Env --base_url|-base_url Optional. Drupal base URL
-     *
-     * @command-parameter-for $sync_account Argv|ConfigFile|Env --sync_account|-sync_account Required. File sync Windows Azure Storage account endpoint
-     * @command-parameter-for $sync_key Argv|ConfigFile|Env --sync_key|-sync_key Required. File sync Windows Azure connection key
-     * @command-parameter-for $sync_container Argv|ConfigFile|Env --sync_container|-sync_container Optional. File sync Windows Azure storage container
-     * @command-parameter-for $sync_folder Argv|ConfigFile|Env --sync_folder|-sync_folder Optional. File sync folder to sync
-     * @command-parameter-for $sync_exclude_paths Argv|ConfigFile|Env --sync_exclude_paths|-sync_exclude_paths Optional. File sync folders to exclude from sync
-     * @command-parameter-for $sync_frequency_in_seconds Argv|ConfigFile|Env --sync_frequency_in_seconds|-sync_frequency_in_seconds Optional. Sync time interval in seconds, use -1 for synchronizing only once.
      */
     public function runCommand($scaffolderFile, $rootPath, $diagnosticsConnectionString = 'UseDevelopmentStorage=true', 
                            $sql_azure_database, $sql_azure_username, $sql_azure_password, $sql_azure_host,
-                                   $db_prefix = '', $update_free_access = 'FALSE', $drupal_hash_salt = 'Some unique value', $base_url = '',
-                                   $sync_account, $sync_key, $sync_container = 'drupal-sync', $sync_folder = 'sites', $sync_exclude_paths = '', $sync_frequency_in_seconds = '10800')    {
+                                   $db_prefix = '', $update_free_access = 'FALSE', $drupal_hash_salt = 'Some unique value', $base_url = '')    {
         // This array of course should come from $options as was originally passed. All params were passed as an array previously and this was not necessary to be built
         $this->parameters(array(
             'diagnosticsConnectionString' => $diagnosticsConnectionString,
@@ -121,12 +88,6 @@ class Drupal
             'update_free_access'          => $update_free_access,
             'drupal_hash_salt'            => $drupal_hash_salt,
             'base_url'                    => $base_url,
-            'sync_account'                => $sync_account,
-            'sync_key'                    => $sync_key,
-            'sync_container'              => $sync_container,
-            'sync_folder'                 => $sync_folder,
-            'sync_exclude_paths'          => $sync_exclude_paths,
-            'sync_frequency_in_seconds'   => $sync_frequency_in_seconds,
         ));
 
         // Load Phar
@@ -152,28 +113,21 @@ class Drupal
                 
         // Download and unpack Drupal
         $this->log('Downloading Drupal');
-        $file = $this->curlFile("http://ftp.drupal.org/files/projects/drupal-7.8.zip", $tmp);
+        $file = $this->curlFile("http://ftp.drupal.org/files/projects/drupal-7.9.zip", $tmp);
         $this->log('Extracting Drupal');
         $this->unzip($file, $tmp);
         $this->log('Moving Drupal files to ' . $approot);
-        $this->move("$tmp\drupal-7.8", $approot);
+        $this->move("$tmp\drupal-7.9", $approot);
 
         // Download and unpack Drupal 7 driver for SQL Server and SQL Azure
+        // Note: We are using development version because stable version does not work with PHP 5.3.8
+        // We need to move to stable bits once patch is moved to stable version
         $this->log('Downloading Drupal 7 driver for SQL Server and SQL Azure');
-        $file = $this->curlFile("http://ftp.drupal.org/files/projects/sqlsrv-7.x-1.1.zip", $tmp);
+        $file = $this->curlFile("http://ftp.drupal.org/files/projects/sqlsrv-7.x-1.x-dev.zip", $tmp);
         $this->log('Extracting Drupal 7 driver for SQL Server and SQL Azure');
         $this->unzip($file, $tmp);
         $this->log('Moving Drupal 7 driver for SQL Server and SQL Azure to ' . $approot . "\includes\database\sqlsrv");
         $this->move("$tmp\sqlsrv\sqlsrv", $approot . "\includes\database\sqlsrv");
-
-        // Apply patch for Drupal 7 driver for SQL Server (http://drupal.org/node/1300312)
-        $file_name_to_patch = $approot . "\includes\database\sqlsrv\database.inc";
-        $content = file_get_contents($file_name_to_patch);
-        $new_content = str_replace(
-                "'/^RELEASE SAVEPOINT (.*)$/' => '-- $0'",
-                "'/^RELEASE SAVEPOINT (.*)$/' => 'SELECT 1 /* $0 */'",
-                $content);
-        file_put_contents($file_name_to_patch, $new_content);
 
         // Download and unpack Windows Azure Integration module
         $this->log('Downloading Windows Azure Integration module');
@@ -197,13 +151,6 @@ class Drupal
 
         // Remove tmp build folder
         @unlink($tmp);
-        
-	echo "\n";
-	echo "\nNOTE: This scaffolder needs FileSystemDurabilityPlugin v1.1. This is not compatible with old version of FileSystemDurabilityPlugin.";
-	echo "\nPlease make sure to install the FileSystemDurabilityPlugin before packaging your application.";
-	echo "\n";
-	echo "\nDownload URL: https://github.com/downloads/Interop-Bridges/Windows-Azure-File-System-Durability-Plugin/FileSystemDurabilityPlugin-v1.1.zip";
-	echo "\n\n";
     }
 
     private function move($src, $dest) {
