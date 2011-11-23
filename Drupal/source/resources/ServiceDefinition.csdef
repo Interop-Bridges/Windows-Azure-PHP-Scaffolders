@@ -16,7 +16,7 @@
     </Endpoints>
     <Imports>
       <Import moduleName="Diagnostics"/>
-      <Import moduleName="FileSystemDurabilityPlugin" />
+
       <!-- For RDP access. Commented by default -->
       <!--
       <Import moduleName="RemoteAccess"/>
