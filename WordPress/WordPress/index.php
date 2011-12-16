@@ -153,7 +153,7 @@ class WordPress
         } else {
             // Download and unpack WordPress
             $this->log('Downloading WordPress');
-            $file = $this->curlFile("http://wordpress.org/wordpress-3.2.1.zip", $tmp);
+            $file = $this->curlFile("http://wordpress.org/wordpress-3.3.zip", $tmp);
             $this->log('Extracting WordPress');
             $this->unzip($file, $tmp);
             $this->log('Moving WordPress files to ' . $this->mAppRoot);
