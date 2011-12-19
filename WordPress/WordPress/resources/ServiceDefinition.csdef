@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="PhpOnAzure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
-  <WebRole name="WebRole" enableNativeCodeExecution="true" vmsize="Small">
+  <WebRole name="WebRole" enableNativeCodeExecution="true" vmsize="ExtraSmall">
     <Sites>
       <Site name="WebRole" physicalDirectory="./WebRole">
         <Bindings>
@@ -12,9 +12,6 @@
       <Task commandLine="add-environment-variables.cmd" executionContext="elevated" taskType="simple" />
       <Task commandLine="install-php.cmd" executionContext="elevated" taskType="simple">
         <Environment>
-<!--          <Variable name="EMULATED">
-            <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
-          </Variable> -->
         </Environment>
       </Task>
     </Startup>
@@ -23,7 +20,6 @@
     </Endpoints>
     <Imports>
     <!--  <Import moduleName="Diagnostics"/> -->
-      <Import moduleName="FileSystemDurabilityPlugin" />
       <!-- For RDP access. Commented by default 
       
       <Import moduleName="RemoteAccess"/>

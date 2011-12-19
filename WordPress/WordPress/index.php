@@ -115,12 +115,6 @@ class WordPress
              $this->p->add('PATH_CURRENT_SITE', false, '/', 'Path of current site');
              $this->p->add('SITE_ID_CURRENT_SITE', false, '1', 'ID of current site');
              $this->p->add('BLOG_ID_CURRENT_SITE', false, '1', 'Blog ID of current site');
-             $this->p->add('sync_account', true, '', 'Windows Azure Storage account endpoint');
-             $this->p->add('sync_key', true, '', 'Windows Azure Storage account key');
-             $this->p->add('sync_container', false, 'wpsync', 'Windows Azure Storage container to sync files to');
-             $this->p->add('sync_folder', false, 'wp-content', 'WordPress folder to watch for changes');
-             $this->p->add('sync_exclude_paths', false, '', 'Path to not sync');
-             $this->p->add('sync_frequency', false, '7200', 'Sync time interval in seconds'); 
              $this->p->add('source', false, '', 'If there is an existing WordPress code base you can use it via a path');
 
 
@@ -153,7 +147,7 @@ class WordPress
         } else {
             // Download and unpack WordPress
             $this->log('Downloading WordPress');
-            $file = $this->curlFile("http://wordpress.org/wordpress-3.2.1.zip", $tmp);
+            $file = $this->curlFile("http://wordpress.org/wordpress-3.3.zip", $tmp);
             $this->log('Extracting WordPress');
             $this->unzip($file, $tmp);
             $this->log('Moving WordPress files to ' . $this->mAppRoot);
@@ -162,8 +156,7 @@ class WordPress
 
         // Download and unpack DB abstraction layer
         $this->log('Downloading Database Abstraction Layer');
-        //$file = $this->curlFile("http://downloads.wordpress.org/plugin/wordpress-database-abstraction.1.1.0.zip", $tmp);
-        $file = $this->curlFile("http://downloads.wordpress.org/plugin/wordpress-database-abstraction.1.1.1.zip", $tmp);
+        $file = $this->curlFile("http://downloads.wordpress.org/plugin/wordpress-database-abstraction.1.1.2.zip", $tmp);
         $this->log('Extracting Database Abstraction Layer');
         $this->unzip($file, $tmp);
         $this->log('Moving Database Abstraction Layer files to ' . $this->mAppRoot . "\wp-content\mu-plugins");
@@ -197,7 +190,6 @@ class WordPress
         
         $this->updateWpConfig();
 
-    echo "\nNOTE: Do not forget to install the FileSystemDurabilityPlugin before packaging your application!";
     echo "\n\nCongratulations! You now have a brand new Windows Azure WordPress project at " . $this->mRootPath . "\n";
 
     }
