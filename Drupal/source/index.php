@@ -113,11 +113,11 @@ class Drupal
                 
         // Download and unpack Drupal
         $this->log('Downloading Drupal');
-        $file = $this->curlFile("http://ftp.drupal.org/files/projects/drupal-7.9.zip", $tmp);
+        $file = $this->curlFile("http://ftp.drupal.org/files/projects/drupal-7.10.zip", $tmp);
         $this->log('Extracting Drupal');
         $this->unzip($file, $tmp);
         $this->log('Moving Drupal files to ' . $approot);
-        $this->move("$tmp\drupal-7.9", $approot);
+        $this->move("$tmp\drupal-7.10", $approot);
 
         // Download and unpack Drupal 7 driver for SQL Server and SQL Azure
         // Note: We are using development version because stable version does not work with PHP 5.3.8
@@ -150,9 +150,29 @@ class Drupal
         $this->move("$tmp\\ctools", $approot . "\sites\\all\modules\\ctools");
 
         // Remove tmp build folder
-        @unlink($tmp);
+        $this->removeDir($tmp);
+        unlink(realpath($rootPath) . "\\Params.class.php"); 
     }
 
+    /**
+     * Removes a given directory and everything in it
+     * 
+     * @param String $path 
+     */
+    private function removeDir($path) {
+        // Open the source directory to read in files
+        $i = new DirectoryIterator($path);
+        foreach($i as $f) {
+            if($f->isFile()) {
+                unlink($f->getRealPath());
+            } else if(!$f->isDot() && $f->isDir()) {
+                $this->removeDir($f->getRealPath());
+                //rmdir($f->getRealPath());
+            }
+        }
+        rmdir($path);
+    }
+    
     private function move($src, $dest) {
         // If source is not a directory stop processing
         if(!is_dir($src)) return false;
