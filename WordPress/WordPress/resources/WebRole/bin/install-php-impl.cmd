@@ -13,4 +13,5 @@ reg add "hku\.default\software\microsoft\windows\currentversion\explorer\user sh
 ECHO Completed PHP installation. >> ..\startup-tasks-log.txt
 
 icacls %RoleRoot%\approot /grant "Everyone":F /T
+CALL icacls ..\wp-content /grant "NETWORK SERVICE":F /T
 %WINDIR%\system32\inetsrv\appcmd.exe set config -section:system.webServer/fastCgi /+"[fullPath='%ProgramFiles(x86)%\PHP\v5.3\php-cgi.exe'].environmentVariables.[name='PATH',value='%PATH%;%RoleRoot%\base\x86']" /commit:apphost 

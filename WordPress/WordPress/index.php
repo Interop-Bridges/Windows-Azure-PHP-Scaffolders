@@ -1,5 +1,4 @@
 <?php
-set_time_limit(600);
 /*
 Copyright 2011 Microsoft Corporation
 
@@ -37,8 +36,11 @@ limitations under the License.
  *  - Change the class name in this file to the name you desire
  */
 
+set_time_limit(600);
 
-
+define("WP_URL", "http://wordpress.org/wordpress-3.3.1.zip");
+define("DB_ABSTRACTION_URL", "http://downloads.wordpress.org/plugin/wordpress-database-abstraction.1.1.3.zip");
+define("WAZ_STORAGE_URL", "http://downloads.wordpress.org/plugin/windows-azure-storage.zip");
 
 
 require_once('Params.class.php');
@@ -147,7 +149,7 @@ class WordPress
         } else {
             // Download and unpack WordPress
             $this->log('Downloading WordPress');
-            $file = $this->curlFile("http://wordpress.org/wordpress-3.3.zip", $tmp);
+            $file = $this->curlFile(WP_URL, $tmp);
             $this->log('Extracting WordPress');
             $this->unzip($file, $tmp);
             $this->log('Moving WordPress files to ' . $this->mAppRoot);
@@ -156,7 +158,7 @@ class WordPress
 
         // Download and unpack DB abstraction layer
         $this->log('Downloading Database Abstraction Layer');
-        $file = $this->curlFile("http://downloads.wordpress.org/plugin/wordpress-database-abstraction.1.1.2.zip", $tmp);
+        $file = $this->curlFile(DB_ABSTRACTION_URL, $tmp);
         $this->log('Extracting Database Abstraction Layer');
         $this->unzip($file, $tmp);
         $this->log('Moving Database Abstraction Layer files to ' . $this->mAppRoot . "\wp-content\mu-plugins");
@@ -166,7 +168,7 @@ class WordPress
 
         // Download and unpack Azure Storage Plugin
         $this->log('Downloading Azure Storage Plugin');
-        $file = $this->curlFile("http://downloads.wordpress.org/plugin/windows-azure-storage.zip", $tmp);
+        $file = $this->curlFile(WAZ_STORAGE_URL, $tmp);
         $this->log('Extracting Azure Storage Plugin');
         $this->unzip($file, $tmp);
         $this->log('Moving Azure Storage Plugin files to ' . $this->mAppRoot . "\wp-content\plugins");
