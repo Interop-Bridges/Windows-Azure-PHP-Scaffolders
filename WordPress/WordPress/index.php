@@ -39,7 +39,7 @@ limitations under the License.
 set_time_limit(600);
 
 define("WP_URL", "http://wordpress.org/wordpress-3.3.1.zip");
-define("DB_ABSTRACTION_URL", "http://downloads.wordpress.org/plugin/wordpress-database-abstraction.1.1.3.zip");
+define("DB_ABSTRACTION_URL", "http://downloads.wordpress.org/plugin/wordpress-database-abstraction.1.1.4.zip");
 define("WAZ_STORAGE_URL", "http://downloads.wordpress.org/plugin/windows-azure-storage.zip");
 
 
