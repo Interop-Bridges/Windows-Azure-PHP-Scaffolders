@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright 2011 Microsoft Corporation
+Copyright 2012 Microsoft Corporation
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ class Drupal
      * @command-parameter-for $scaffolderFile Argv --Phar Required. The scaffolder Phar file path. This is injected automatically.
      * @command-parameter-for $rootPath Argv|ConfigFile --OutputPath|-out Required. The path to create the Windows Azure project structure. This is injected automatically. 
      * @command-parameter-for $diagnosticsConnectionString Argv|ConfigFile|Env --DiagnosticsConnectionString|-d Optional. The diagnostics connection string. This defaults to development storage.
-         * @command-parameter-for $sql_azure_database Argv|ConfigFile|Env --sql_azure_database|-sql_azure_database Required. SQL Azure database name for Drupal
+     * @command-parameter-for $sql_azure_database Argv|ConfigFile|Env --sql_azure_database|-sql_azure_database Required. SQL Azure database name for Drupal
      * @command-parameter-for $sql_azure_username Argv|ConfigFile|Env --sql_azure_username|-sql_azure_username Required. SQL Azure Database user (It must be in format ****@****)
      * @command-parameter-for $sql_azure_password Argv|ConfigFile|Env --sql_azure_password|-sql_azure_password Required. SQL Azure Database password
      * @command-parameter-for $sql_azure_host Argv|ConfigFile|Env --sql_azure_host|-sql_azure_host Required. Database host (It must be in format ****.database.windows.net)
@@ -113,17 +113,15 @@ class Drupal
                 
         // Download and unpack Drupal
         $this->log('Downloading Drupal');
-        $file = $this->curlFile("http://ftp.drupal.org/files/projects/drupal-7.10.zip", $tmp);
+        $file = $this->curlFile("http://ftp.drupal.org/files/projects/drupal-7.12.zip", $tmp);
         $this->log('Extracting Drupal');
         $this->unzip($file, $tmp);
         $this->log('Moving Drupal files to ' . $approot);
-        $this->move("$tmp\drupal-7.10", $approot);
+        $this->move("$tmp\drupal-7.12", $approot);
 
         // Download and unpack Drupal 7 driver for SQL Server and SQL Azure
-        // Note: We are using development version because stable version does not work with PHP 5.3.8
-        // We need to move to stable bits once patch is moved to stable version
         $this->log('Downloading Drupal 7 driver for SQL Server and SQL Azure');
-        $file = $this->curlFile("http://ftp.drupal.org/files/projects/sqlsrv-7.x-1.x-dev.zip", $tmp);
+        $file = $this->curlFile("http://ftp.drupal.org/files/projects/sqlsrv-7.x-1.2.zip", $tmp);
         $this->log('Extracting Drupal 7 driver for SQL Server and SQL Azure');
         $this->unzip($file, $tmp);
         $this->log('Moving Drupal 7 driver for SQL Server and SQL Azure to ' . $approot . "\includes\database\sqlsrv");
