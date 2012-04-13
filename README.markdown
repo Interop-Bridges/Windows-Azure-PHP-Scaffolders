@@ -3,7 +3,7 @@ Scaffolds created for the Windows Azure SDK for PHP by the Microsoft Interoperab
 http://azurephp.interopbridges.com
 
 License:
-==========================================================
+
 
 Copyright 2012 Microsoft Corporation
 
