@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="PhpOnAzure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <WebRole name="WebRole" enableNativeCodeExecution="true" vmsize="Small">
+    <Sites>
+      <Site name="WebRole" physicalDirectory="./WebRole">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="HttpEndpoint" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <Startup>
+      <Task commandLine="add-environment-variables.cmd" executionContext="elevated" taskType="simple" />
+      <Task commandLine="install-php.cmd" executionContext="elevated" taskType="simple">
+        <Environment>
+<!--          <Variable name="EMULATED">
+            <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+          </Variable> -->
+        </Environment>
+      </Task>
+    </Startup>
+    <Endpoints>
+      <InputEndpoint name="HttpEndpoint" protocol="http" port="80" />
+    </Endpoints>
+    <Imports>
+    <!--  <Import moduleName="Diagnostics"/> 
+      <Import moduleName="FileSystemDurabilityPlugin" /> -->
+      <!-- For RDP access. Commented by default 
+      
+      <Import moduleName="RemoteAccess"/>
+      <Import moduleName="RemoteForwarder"/>
+      -->
+    </Imports>
+    <ConfigurationSettings>
+      <Setting name="offline" />
+      <Setting name="offline_message" />
+      <Setting name="sitename" />
+      <Setting name="editor" />
+      <Setting name="list_limit"/>
+      <Setting name="access"/>
+      <Setting name="debug"/>
+      <Setting name="debug_lang" />
+      <Setting name="dbtype" />
+      <Setting name="host" />
+      <Setting name="user" />
+      <Setting name="password"/>
+      <Setting name="db"/>
+      <Setting name="dbprefix" />
+      <Setting name="live_site" />
+      <Setting name="secret" />
+      <Setting name="gzip" />
+      <Setting name="error_reporting" />
+      <Setting name="helpurl" />
+      <Setting name="ftp_host" />
+      <Setting name="ftp_port" />
+      <Setting name="ftp_user" />
+      <Setting name="ftp_pass" />
+      <Setting name="ftp_root"/>
+      <Setting name="ftp_enable" />
+      <Setting name="storage_type" />
+      <Setting name="cloud_acc_name" />
+      <Setting name="cloud_access_key" />
+      <Setting name="offset" />
+      <Setting name="offset_user" />
+      <Setting name="mailer" />
+      <Setting name="mailfrom" />
+      <Setting name="fromname" />
+      <Setting name="sendmail" />
+      <Setting name="smtpauth"/>
+      <Setting name="smtpuser" />
+      <Setting name="smtppass" />
+      <Setting name="smtphost" />
+      <Setting name="smtpsecure" />
+      <Setting name="smtpport"/>
+      <Setting name="caching" />
+      <Setting name="cache_handler" />
+      <Setting name="cachetime"/>
+      <Setting name="MetaDesc"  />
+      <Setting name="MetaKeys" />
+      <Setting name="MetaTitle" />
+      <Setting name="MetaAuthor"  />
+      <Setting name="sef" />
+      <Setting name="sef_rewrite"  />
+      <Setting name="sef_suffix" />
+      <Setting name="unicodeslugs" />
+      <Setting name="feed_limit"/>
+      <Setting name="lifetime" />
+      <Setting name="session_handler"  />
+         </ConfigurationSettings>
+</WebRole>
+</ServiceDefinition>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ServiceConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" serviceName="" osFamily="1" osVersion="*" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration">
+  <Role name="PhpOnAzure.Web">
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=hwazstor1;AccountKey=YzUkHBz8upCtndMf7OvNlPyPf/vfzGm9jvEEqWN7O4BUAFAK/by1GXtvGNH+GQKFmbf7DsQzaenWSQ7vvQA91w==" />
+      <Setting name="offline" value="$offline$" />
+      <Setting name="offline_message" value="$offline_message$" />
+      <Setting name="sitename" value="$sitename$" />
+      <Setting name="editor" value="$editor$" />
+      <Setting name="list_limit" value="$list_limit$" />
+      <Setting name="access" value="$access$" />
+      <Setting name="debug" value="$debug$" />
+      <Setting name="debug_lang" value="$debug_lang$" />
+      <Setting name="dbtype" value="$dbtype$" />
+      <Setting name="host" value="$host$" />
+      <Setting name="user" value="$user$" />
+      <Setting name="password" value="$password$" />
+      <Setting name="db" value="$db$" />
+      <Setting name="dbprefix" value="$dbprefix$" />
+      <Setting name="live_site" value="$live_site$" />
+      <Setting name="secret" value="$secret$" />
+      <Setting name="gzip" value="$gzip$" />
+      <Setting name="error_reporting" value="$error_reporting$" />
+      <Setting name="helpurl" value="$helpurl$" />
+      <Setting name="ftp_host" value="$ftp_host$" />
+      <Setting name="ftp_port" value="$ftp_port$" />
+      <Setting name="ftp_user" value="$ftp_user$" />
+      <Setting name="ftp_pass" value="$ftp_pass$" />
+      <Setting name="ftp_root" value="$ftp_root$" />
+      <Setting name="ftp_enable" value="$ftp_enable$" />
+      <Setting name="storage_type" value="$storage_type$" />
+      <Setting name="cloud_acc_name" value="$cloud_acc_name$" />
+      <Setting name="cloud_access_key" value="$cloud_access_key$" />
+      <Setting name="offset" value="$offset$" />
+      <Setting name="offset_user" value="$offset_user$" />
+      <Setting name="mailer" value="$mailer$" />
+      <Setting name="mailfrom" value="$mailfrom$" />
+      <Setting name="fromname" value="$fromname$" />
+      <Setting name="sendmail" value="$sendmail$" />
+      <Setting name="smtpauth" value="$smtpauth$" />
+      <Setting name="smtpuser" value="$smtpuser$" />
+      <Setting name="smtppass" value="$smtppass$" />
+      <Setting name="smtphost" value="$smtphost$" />
+      <Setting name="smtpsecure" value="$smtpsecure$" />
+      <Setting name="smtpport" value="$smtpport$" />
+      <Setting name="caching" value="$caching$" />
+      <Setting name="cache_handler" value="$cache_handler$" />
+      <Setting name="cachetime" value="$cachetime$" />
+      <Setting name="MetaDesc" value="$MetaDesc$" />
+      <Setting name="MetaKeys" value="$MetaKeys$" />
+      <Setting name="MetaTitle" value="$MetaTitle$" />
+      <Setting name="MetaAuthor" value="$MetaAuthor$" />
+      <Setting name="sef" value="$sef$" />
+      <Setting name="sef_rewrite" value="$sef_rewrite$" />
+      <Setting name="sef_suffix" value="$sef_suffix$" />
+      <Setting name="unicodeslugs" value="$unicodeslugs$" />
+      <Setting name="feed_limit" value="$feed_limit$" />
+      <Setting name="lifetime" value="$lifetime$" />
+      <Setting name="session_handler" value="$session_handler$" />
+      
+	  <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="hooduku" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEEA0DiRg8xCrSku/+zvvAgowDQYJKoZIhvcNAQEBBQAEggEAMTTJgznUtl2Lx/teBseafL6Tia2J6im3DEmEyVcEQjpOn+rqklA/jhbs3gKdazrQmoCRJccpF+EnliamN0NaYsyfNbH2BAio/rgi4UvK+bVnwLLkCJ8dWbpowEOWcvVaOxbKHqC5qAGa8JJPjMXj3114STVlBzJtsNT2AyutgDFV8ajFxrDW0feoLXsDc/MB4CBmINSshY+Ml8DUv8ow3zdEQuIz54RQzM0Y5Yd/TWmSUGIVMvk/ONSLiOKjbTqN90PZPro1kZa1FgY+hdMW56ljtim3wS2Ds3RO0M7OaK06I4G9HOyfkSHRpdv7eMFUccYhEXCtGhT6IHxhr/3uizAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECAJyW9JTDUktgBDqF5tjg91yM/yzoPeUatBY" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2020-03-24T06:59:59.0000000Z" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+	  
+
+      <Setting name="FileSystemDurabilityPlugin.StorageAccountName" value="$sync_account$" /> <!-- Windows Azure Storage account name -->
+      <Setting name="FileSystemDurabilityPlugin.StorageAccountPrimaryKey" value="$sync_key$" /> <!-- Windows Azure Storage account key -->
+      <Setting name="FileSystemDurabilityPlugin.SyncContainerName" value="$sync_container$" /> <!-- Valid container name -->
+      <Setting name="FileSystemDurabilityPlugin.LocalFolderToSync" value="$sync_folder$" /> <!-- components folder -->
+      <Setting name="FileSystemDurabilityPlugin.FileNameIncludesToSync" value="" /> <!-- Optional: To sync specific files only -->
+      <Setting name="FileSystemDurabilityPlugin.ExcludePathsFromSync" value="" />   <!-- Optional. To exclude some folders from sync -->
+      <Setting name="FileSystemDurabilityPlugin.ExcludeSubDirectories" value="false" /> <!-- To exclude sub directories, set this value as true -->
+      <Setting name="FileSystemDurabilityPlugin.SyncFrequencyInSeconds" value="7200" /> <!-- Keep this value large to minimize Windows Azure Storage Transaction cost. Use 0 value to pause the sync. -->
+   </ConfigurationSettings>
+    <Instances count="1" />
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="B5877C77A2C6CC8485018458E41D2C34BFA01FAF" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>
